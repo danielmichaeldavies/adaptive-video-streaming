@@ -26,18 +26,8 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 const EXAMPLE_VIDEO = 'https://dubit-stream-tests.s3-eu-west-1.amazonaws.com/legend/master_playlist.m3u8';
 
 const App: () => React$Node = () => {
-  const [bitrate, setBitrate] = useState(0);
   const [inputText, setInputText] = useState(EXAMPLE_VIDEO);
-  const [videoDetails, setVideoDetails] = useState(JSON.stringify({}, null, 2));
   const [videoSrc, setVideoSrc] = useState(EXAMPLE_VIDEO);
-
-  const handleVideoLoad = payload => {
-    setVideoDetails(JSON.stringify(payload, null, 2));
-  };
-
-  const handleBandwidthUpdate = ({ bitrate: videoBitrate }) => {
-    setBitrate(videoBitrate);
-  };
 
   const updateVideoSrc = () => {
     setVideoSrc(inputText);
@@ -60,12 +50,7 @@ const App: () => React$Node = () => {
               style={styles.video}
               controls={true}
               repeat={true}
-              onLoad={handleVideoLoad}
-              reportBandwidth={true}
-              onBandwidthUpdate={handleBandwidthUpdate}
             />
-            <Text style={styles.text}>{bitrate}</Text>
-            <Text style={styles.text}>{videoDetails}</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
