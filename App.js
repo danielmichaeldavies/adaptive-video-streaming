@@ -9,25 +9,26 @@
 import React, { useState } from 'react';
 import {
   Button,
+  Dimensions,
   SafeAreaView,
-  StyleSheet,
   ScrollView,
-  View,
+  StatusBar,
+  StyleSheet,
   Text,
   TextInput,
-  StatusBar,
+  View,
 } from 'react-native';
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-
 import Video from 'react-native-video';
+
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const EXAMPLE_VIDEO = 'https://dubit-stream-tests.s3-eu-west-1.amazonaws.com/legend/master_playlist.m3u8';
 
 const App: () => React$Node = () => {
   const [bitrate, setBitrate] = useState(0);
-  const [videoSrc, setVideoSrc] = useState(EXAMPLE_VIDEO);
   const [inputText, setInputText] = useState(EXAMPLE_VIDEO);
+  const [videoSrc, setVideoSrc] = useState(EXAMPLE_VIDEO);
 
   const handleBandwidthUpdate = ({ bitrate: newBitrate }) => {
     setBitrate(newBitrate);
@@ -53,17 +54,21 @@ const App: () => React$Node = () => {
               }}
               style={styles.video}
               controls={true}
+              repeat={true}
               reportBandwidth={true}
               onBandwidthUpdate={handleBandwidthUpdate}
             />
-          </View>
 
-          <Text>{bitrate}</Text>
+            <Text style={styles.text}>{bitrate}</Text>
+          </View>
         </ScrollView>
       </SafeAreaView>
     </>
   );
 };
+
+const screenWidth = Math.round(Dimensions.get('window').width);
+const videoWidth = screenWidth - 40;
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -71,22 +76,28 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: Colors.white,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
+    padding: 20,
+    alignItems: 'center',
   },
   textInput: {
     borderColor: 'grey',
     borderWidth: 1,
     height: 40,
-    width: 300,
+    flex: 1,
+    padding: 3,
   },
   video: {
-    width: 400,
-    height: 400,
+    flex: 1,
+    height: videoWidth,
+    width: videoWidth,
+  },
+  text: {
+    borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 5,
+    marginTop: 5,
+    padding: 5,
+    width: videoWidth,
   },
 });
 
